@@ -25,25 +25,20 @@ import {
 // ---------------------------------------------------------------------------
 // WhatsApp floating button
 // ---------------------------------------------------------------------------
-function WhatsAppFloat() {
-  const { trackWhatsAppClick } = useAnalytics();
+function FloatingCTA() {
+  const { trackReserveClick } = useAnalytics();
 
   return (
     <a
       href={WHATSAPP_URL}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label="Reservar Coffee Tour por WhatsApp"
-      onClick={() => trackWhatsAppClick('floating_button')}
-      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-[#25D366] shadow-lg hover:bg-[#20b95a] hover:shadow-xl hover:shadow-[#25D366]/40 hover:-translate-y-1 transition-all duration-300"
+      aria-label="Reservar Coffee Tour"
+      onClick={() => trackReserveClick('floating_button')}
+      className="fixed bottom-6 right-6 z-50 flex items-center justify-center w-14 h-14 rounded-full bg-brand-pink shadow-lg hover:bg-brand-pink/90 hover:shadow-xl hover:shadow-brand-pink/40 hover:-translate-y-1 transition-all duration-300"
     >
-      <svg
-        viewBox="0 0 24 24"
-        fill="currentColor"
-        className="w-7 h-7 text-white"
-        aria-hidden="true"
-      >
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+      <svg className="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
       </svg>
     </a>
   );
@@ -54,7 +49,7 @@ function WhatsAppFloat() {
 // ---------------------------------------------------------------------------
 function StatsBar() {
   return (
-    <section className="bg-brand-navy py-8">
+    <section className="bg-brand-dark py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-0 lg:divide-x lg:divide-white/10">
           {STATS.map((stat) => (
@@ -101,9 +96,8 @@ function WhyChooseSection() {
               ¿Por qué elegir nuestro Coffee Tour?
             </h2>
             <p className="text-brand-dark/70 text-base leading-relaxed mb-8">
-              La Palma &amp; El Tucán es una finca cafetera activa de 5 hectáreas ubicada a
-              1.700 msnm en Zipacón, Cundinamarca. Exportamos a más de 30 países y cultivamos
-              variedades de clase mundial como{' '}
+              La Palma &amp; El Tucán es una finca cafetera reconocida internacionalmente,
+              ubicada en Zipacón, Cundinamarca. Cultivamos variedades de clase mundial como{' '}
               <span className="font-semibold text-brand-dark">Gesha, Sidra, Mokka y Java</span>.
               Nuestro Coffee Tour te lleva detrás de escena: de los cafetales al laboratorio de
               catación, con almuerzo farm-to-table incluido.
@@ -167,10 +161,9 @@ function WhyChooseSection() {
 // ---------------------------------------------------------------------------
 function TourStepsSection() {
   const { ref, isVisible } = useScrollReveal();
-  const { trackWhatsAppClick, trackReserveClick } = useAnalytics();
 
   return (
-    <section id="incluye" className="py-20 bg-white">
+    <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
@@ -188,7 +181,7 @@ function TourStepsSection() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-start">
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left: Photo gallery */}
           <div className="flex flex-col gap-3">
             <img
@@ -216,60 +209,76 @@ function TourStepsSection() {
             </div>
           </div>
 
-          {/* Right: Steps + Included + Ideal para + CTAs */}
-          <div className="space-y-6">
-            {/* Tour Steps */}
-            <div className="space-y-5">
-              {TOUR_STEPS.map((step) => (
-                <div key={step.number} className="flex gap-4 items-start">
-                  <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-pink text-white flex items-center justify-center text-sm font-bold">
-                    {step.number}
-                  </span>
-                  <div>
-                    <p className="font-serif font-semibold text-brand-dark text-lg">
-                      {step.title}
-                    </p>
-                    <p className="text-brand-dark/60 text-sm mb-2">{step.description}</p>
-                    <ul className="space-y-1">
-                      {step.details.map((detail) => (
-                        <li key={detail} className="flex items-start gap-2 text-sm text-brand-dark/70">
-                          <svg
-                            className="flex-shrink-0 w-4 h-4 mt-0.5 text-brand-pink"
-                            viewBox="0 0 12 12"
-                            fill="none"
-                            aria-hidden="true"
-                          >
-                            <path
-                              d="M2 6L4.5 8.5L10 3"
-                              stroke="currentColor"
-                              strokeWidth="1.8"
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            />
-                          </svg>
-                          {detail}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+          {/* Right: 3 Tour Steps */}
+          <div className="space-y-5">
+            {TOUR_STEPS.map((step) => (
+              <div key={step.number} className="flex gap-4 items-start">
+                <span className="flex-shrink-0 w-8 h-8 rounded-full bg-brand-pink text-white flex items-center justify-center text-sm font-bold">
+                  {step.number}
+                </span>
+                <div>
+                  <p className="font-serif font-semibold text-brand-dark text-lg">
+                    {step.title}
+                  </p>
+                  <p className="text-brand-dark/60 text-sm mb-2">{step.description}</p>
+                  <ul className="space-y-1">
+                    {step.details.map((detail) => (
+                      <li key={detail} className="flex items-start gap-2 text-sm text-brand-dark/70">
+                        <svg
+                          className="flex-shrink-0 w-4 h-4 mt-0.5 text-brand-pink"
+                          viewBox="0 0 12 12"
+                          fill="none"
+                          aria-hidden="true"
+                        >
+                          <path
+                            d="M2 6L4.5 8.5L10 3"
+                            stroke="currentColor"
+                            strokeWidth="1.8"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                        {detail}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-            {/* Divider */}
-            <hr className="border-brand-beige" />
+// ---------------------------------------------------------------------------
+// Includes Section (separated)
+// ---------------------------------------------------------------------------
+function IncludesSection() {
+  const { ref, isVisible } = useScrollReveal();
+  const { trackWhatsAppClick, trackReserveClick } = useAnalytics();
 
-            {/* Included items */}
+  return (
+    <section id="incluye" className="py-16 bg-brand-light">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div
+          ref={ref}
+          className={`${isVisible ? 'scroll-visible' : 'scroll-hidden'}`}
+        >
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            {/* Left: Content */}
             <div>
-              <h3 className="font-serif text-xl font-bold text-brand-dark mb-4">
+              <h3 className="font-serif text-2xl sm:text-3xl font-bold text-brand-dark mb-6">
                 ¿Qué incluye?{' '}
                 <span className="text-brand-pink">· $492.000 COP/persona</span>
               </h3>
-              <ul className="grid sm:grid-cols-2 gap-x-6 gap-y-2">
+
+              <ul className="space-y-3 mb-8">
                 {INCLUDED_ITEMS.map((item) => (
                   <li
                     key={item.text}
-                    className="flex items-start gap-2 text-sm text-brand-dark/80"
+                    className="flex items-start gap-2.5 text-sm text-brand-dark/80"
                   >
                     <svg
                       className="flex-shrink-0 w-4 h-4 mt-0.5 text-brand-green"
@@ -289,39 +298,63 @@ function TourStepsSection() {
                   </li>
                 ))}
               </ul>
-            </div>
 
-            {/* Ideal para */}
-            <div className="bg-brand-light rounded-2xl p-5">
-              <p className="font-semibold text-brand-dark text-sm mb-3 uppercase tracking-widest">
-                Ideal para
-              </p>
-              <div className="grid grid-cols-2 gap-3 text-sm text-brand-dark/80">
-                <span>☕ Amantes del café</span>
-                <span>🌿 Exploradores de naturaleza</span>
-                <span>👨‍👩‍👧 Familias y parejas</span>
-                <span>✨ Turistas buscando lo auténtico</span>
+              {/* Ideal para */}
+              <div className="bg-white rounded-2xl p-5 mb-8">
+                <p className="font-semibold text-brand-dark text-sm mb-3 uppercase tracking-widest">
+                  Ideal para
+                </p>
+                <div className="grid grid-cols-2 gap-3 text-sm text-brand-dark/80">
+                  <span>☕ Amantes del café</span>
+                  <span>🌿 Exploradores de naturaleza</span>
+                  <span>👨‍👩‍👧 Familias y parejas</span>
+                  <span>✨ Turistas buscando lo auténtico</span>
+                </div>
               </div>
+
+              {/* CTAs */}
+              <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href={WHATSAPP_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => trackWhatsAppClick('includes_section')}
+              className="flex-1 bg-brand-pink text-white text-center px-6 py-3.5 rounded-full font-semibold hover:bg-brand-pink/90 transition-all duration-200 hover:shadow-lg hover:shadow-brand-pink/30 hover:-translate-y-0.5"
+            >
+              Reservar mi tour
+            </a>
+            <a
+              href="#reservar"
+              onClick={() => trackReserveClick('includes_section')}
+              className="flex-1 border-2 border-brand-pink text-brand-pink text-center px-6 py-3.5 rounded-full font-semibold hover:bg-brand-pink hover:text-white transition-all duration-200 hover:-translate-y-0.5"
+            >
+              Ver más
+            </a>
+          </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-col sm:flex-row gap-3">
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={() => trackWhatsAppClick('tour_steps_section')}
-                className="flex-1 bg-[#25D366] text-white text-center px-6 py-3.5 rounded-full font-semibold hover:bg-[#20b95a] transition-all duration-200 hover:shadow-lg hover:shadow-[#25D366]/30 hover:-translate-y-0.5"
-              >
-                Reservar mi tour
-              </a>
-              <a
-                href="#reservar"
-                onClick={() => trackReserveClick('tour_steps_section')}
-                className="flex-1 border-2 border-brand-pink text-brand-pink text-center px-6 py-3.5 rounded-full font-semibold hover:bg-brand-pink hover:text-white transition-all duration-200 hover:-translate-y-0.5"
-              >
-                Ver más
-              </a>
+            {/* Right: Photo collage */}
+            <div className="flex flex-col gap-3">
+              <div className="grid grid-cols-2 gap-3">
+                <img
+                  src={ASSETS.COMIDA}
+                  alt="Almuerzo farm-to-table incluido en el tour"
+                  className="w-full h-48 object-cover rounded-2xl"
+                  loading="lazy"
+                />
+                <img
+                  src={ASSETS.HUERTA}
+                  alt="Huerta orgánica de La Palma y El Tucán"
+                  className="w-full h-48 object-cover rounded-2xl"
+                  loading="lazy"
+                />
+              </div>
+              <img
+                src={ASSETS.DEGUSTACION}
+                alt="Degustación de café de especialidad"
+                className="w-full h-56 object-cover rounded-2xl"
+                loading="lazy"
+              />
             </div>
           </div>
         </div>
@@ -379,7 +412,7 @@ function ExperiencesSection() {
             className="w-full h-72 sm:h-80 object-cover"
             loading="lazy"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-brand-navy/40 to-transparent flex flex-col justify-end p-8">
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-dark/90 via-brand-dark/50 to-transparent flex flex-col justify-end p-8">
             <h3 className="font-serif text-2xl sm:text-3xl font-bold text-white mb-3">
               Una finca de clase mundial para una experiencia única
             </h3>
@@ -408,7 +441,7 @@ function ReviewsSection() {
   const { ref, isVisible } = useScrollReveal();
 
   return (
-    <section className="py-20 bg-brand-navy">
+    <section className="py-20 bg-brand-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div
@@ -498,7 +531,7 @@ function DistanceSection() {
         {/* Two-column grid */}
         <div className="grid lg:grid-cols-2 gap-6 mb-6">
           {/* Left: navy card — transport info */}
-          <div className="bg-brand-navy rounded-2xl p-8 text-white">
+          <div className="bg-brand-dark rounded-2xl p-8 text-white">
             <div className="flex items-center gap-3 mb-6">
               <div className="w-10 h-10 rounded-full bg-brand-pink/20 flex items-center justify-center flex-shrink-0">
                 <MapPin className="w-5 h-5 text-brand-pink" aria-hidden="true" />
@@ -551,7 +584,7 @@ function DistanceSection() {
             <ul className="space-y-3 mb-6">
               {[
                 '1.700 msnm con microclima único de montaña',
-                '5 hectáreas de cafetales de especialidad',
+                'Cafetales de especialidad con variedades premium',
                 'Bosque de niebla con senderos y cascadas',
                 'Huerta orgánica y gastronomía farm-to-table',
               ].map((item) => (
@@ -658,7 +691,7 @@ function UrgencySection() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackWhatsAppClick('urgency_section')}
-              className="bg-[#25D366] text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-[#20b95a] transition-all duration-200 hover:shadow-lg hover:shadow-[#25D366]/30 hover:-translate-y-0.5"
+              className="bg-brand-pink text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-brand-pink/90 transition-all duration-200 hover:shadow-lg hover:shadow-brand-pink/30 hover:-translate-y-0.5"
             >
               Reservar mi Coffee Tour
             </a>
@@ -810,7 +843,7 @@ function CtaFinal() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackWhatsAppClick('cta_final')}
-              className="bg-[#25D366] text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-[#20b95a] transition-all duration-200 hover:shadow-lg hover:shadow-[#25D366]/30 hover:-translate-y-0.5"
+              className="bg-brand-pink text-white px-8 py-4 rounded-full font-semibold text-base hover:bg-brand-pink/90 transition-all duration-200 hover:shadow-lg hover:shadow-brand-pink/30 hover:-translate-y-0.5"
             >
               Reservar por WhatsApp
             </a>
@@ -954,6 +987,7 @@ export default function App() {
         <StatsBar />
         <WhyChooseSection />
         <TourStepsSection />
+        <IncludesSection />
         <ExperiencesSection />
         <ReviewsSection />
         <DistanceSection />
@@ -962,7 +996,7 @@ export default function App() {
         <CtaFinal />
       </main>
       <Footer />
-      <WhatsAppFloat />
+      <FloatingCTA />
     </>
   );
 }

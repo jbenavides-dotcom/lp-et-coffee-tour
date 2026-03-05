@@ -56,7 +56,7 @@ export const PILLARS: PillarItem[] = [
   {
     icon: '☕',
     title: 'Cafés de clase mundial',
-    description: 'Finca reconocida internacionalmente por variedades Gesha, Sidra, Mokka y Java. Exportamos a más de 30 países.',
+    description: 'Finca reconocida internacionalmente por sus variedades Gesha, Sidra, Mokka y Java.',
   },
   {
     icon: '🌱',
